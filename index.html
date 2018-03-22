@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Polygen test</title>
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <style type="text/css">
+            body {
+              padding: 0;
+              margin: 0;
+            }
+
+            .box.box-main {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+            }
+
+            .box.box-sm {
+                flex-grow: 1;
+                min-height: 50vh;
+            }
+
+            @media (min-width: 768px) {
+                .box.box-main {
+                    /*max-width: calc(100% - 50em);*/
+                }
+                .box.box-sm {
+                    flex-basis: 600px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="box box-main">
+            <button id="shift">Shift</button>
+            <canvas id="polygen" width="800" height="800" polygen-fill="50, 128, 255">
+            </canvas>
+        </div>
+        <script src="polygen.js"></script>
+        <script type="text/javascript">
+        $(function () {
+            var baseHue = Math.random() * 256
+            var data = {}
+            $('body').css('background', 'hsl(' + baseHue + ', 50%, 50%)')
+            Polygen('#polygen', {
+                hue: baseHue,
+                split: 3,
+                clear: true
+            }, data)
+            Polygen('#polygen', {
+                hue: baseHue,
+                split: 3
+            }, data)
+
+            $('#shift').click(function () {
+                Polygen('#polygen', {
+                    hue: baseHue,
+                    split: 3,
+                    transition: 1
+                }, data)
+                setInterval(function () {
+                    Polygen('#polygen', {
+                        hue: baseHue,
+                        split: 3,
+                        transition: 1,
+                        overbound: 1
+                    }, data)
+                }, 1000)
+            })
+        })
+        </script>
+    </body>
+</html>
