@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Polygen demo - jQuery</title>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <style type="text/css">
+            body {
+              padding: 0;
+              margin: 0;
+              overflow-x: hidden;
+            }
+            
+            .box-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                max-width: 100vw;
+            }
+
+            .box {
+                text-align: center;
+                padding: 5px;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="box-container">
+            <div class="box">
+                FADE CENTER
+                <canvas id="polygen1" height="500"></canvas>
+            </div>
+            <div class="box">
+                FADE DOWN
+                <canvas id="polygen2" height="500"></canvas>
+            </div>
+            <div class="box">
+                DARK
+                <canvas id="polygen3" height="500"></canvas>
+            </div>
+            <div class="box">
+                LIGHT
+                <canvas id="polygen4" height="500"></canvas>
+            </div>
+            <div class="box">
+                FADE DOWN ANIMATED
+                <canvas id="polygen5" height="500"></canvas>
+            </div>
+            <div class="box">
+                DARK OVERBOUND 2
+                <canvas id="polygen6" height="500"></canvas>
+            </div>
+            <div class="box">
+                DARK OVERBOUND 0.5
+                <canvas id="polygen7" height="500"></canvas>
+            </div>
+            <div class="box">
+                FADE DOWN OVERBOUND 4 ANIMATED
+                <canvas id="polygen8" height="500"></canvas>
+            </div>
+        </div>
+        <script src="polygen-jquery.min.js"></script>
+        <script type="text/javascript">
+        $(() => {
+            $('canvas').attr('width', window.innerWidth / 2 - 10)
+            const baseHue = Math.random() * 256
+            $('body').css('background', 'hsl(' + baseHue + ', 50%, 50%)')
+            $('#polygen1').polygen({
+                hue: Math.random() * 256,
+                split: 10,
+                padding: 1,
+                colorgen: 'fade_center'
+            })
+            $('#polygen2').polygen({
+                hue: Math.random() * 256,
+                split: 6,
+                padding: 1,
+                colorgen: 'fade_down'
+            })
+            $('#polygen3').polygen({
+                hue: Math.random() * 256,
+                split: 12,
+                padding: 0
+            })
+            $('#polygen4').polygen({
+                hue: Math.random() * 256,
+                split: 4,
+                padding: 0,
+                colorgen: 'basic_light'
+            })
+            $('#polygen5').polygen({
+                hue: Math.random() * 256,
+                split: 16,
+                transition: 5,
+                colorgen: 'fade_down'
+            })
+            setInterval(() => {
+                $('#polygen5').polygen({
+                    hue: Math.random() * 256
+                })
+            }, 5000)
+            $('#polygen6').polygen({
+                hue: Math.random() * 256,
+                split: 4,
+                overbound: 2
+            })
+            $('#polygen7').polygen({
+                hue: Math.random() * 256,
+                split: 7,
+                overbound: 0.5
+            })
+            $('#polygen8').polygen({
+                hue: Math.random() * 256,
+                split: 8,
+                padding: 1,
+                transition: 5,
+                overbound: 4,
+                colorgen: 'fade_down'
+            })
+            setInterval(() => {
+                $('#polygen8').polygen({
+                    hue: Math.random() * 256
+                })
+            }, 5000)
+            $('[id*=polygen]').click(function () {
+                $(this).polygen()
+            })
+        })
+        </script>
+    </body>
+</html>

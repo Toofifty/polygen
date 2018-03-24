@@ -1,4 +1,4 @@
-var polygen = (function () {
+;(function ($) {
     var polydata = {}
 
     var COLOR_GENS = {
@@ -63,8 +63,8 @@ var polygen = (function () {
         return verts
     }
 
-    return function (el, opts) {
-        var data = polydata[el.getAttribute('id')]
+    $.fn.polygen = function (opts) {
+        var data = polydata[this.attr('id')]
         if (data && data.anim) clearInterval(data.anim)
         if (opts && opts.colorgen && typeof opts.colorgen === 'string') {
             if (Object.keys(COLOR_GENS).indexOf(opts.colorgen) > -1) {
@@ -87,9 +87,9 @@ var polygen = (function () {
             opts.splity = opts.split
         }
         var currentHue = opts.hue
-        var width = el.clientWidth
-        var height = el.clientHeight
-        var canvas = el.getContext('2d')
+        var width = this.innerWidth()
+        var height = this.innerHeight()
+        var canvas = this[0].getContext('2d')
         var tri = function (v1, v2, v3) {
             canvas.beginPath()
             {
@@ -113,7 +113,7 @@ var polygen = (function () {
             }
         }
         if (!data) {
-            data = polydata[el.getAttribute('id')] = {}
+            data = polydata[this.attr('id')] = {}
         }
         if (data.verts === undefined || data.verts.length === 0) {
             // initial draw
@@ -147,6 +147,6 @@ var polygen = (function () {
             data.verts = newVerts
         }
         data.opts = opts
-        return el
+        return this
     }
-})()
+})(jQuery)
